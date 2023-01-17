@@ -1,0 +1,7 @@
+path: WIDER_FACE_YOLO # Base path
+train: train # Train path relative to base path
+val: valid # Validation path relative to base path
+test: test # Test path relative to base path
+
+nc: 1 # Number of classes
+names: ['Face'] # Name of the class
