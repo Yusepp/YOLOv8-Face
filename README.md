@@ -16,14 +16,14 @@ or alternatively if you are using conda
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 ```
 
-then you install the ultralytics package
+then you install the ultralytics package (this code works for *ultralytics-8.0.10*)
 ```bash
 pip install ultralytics
 ```
 
 ## Usage
 
-There are two python scripts, [train.py](train.py) is from fine tune a yolov8 model and [test.py](test.py) is to test the model with an image.
+There are three python scripts, [train.py](train.py) is from fine tune a yolov8 model, [test.py](test.py) is to test the model with images and [demo.py](demo.py) is to launch a real-time demo of the model with your webcam.
 
 You must configure [wider.yaml](datasets/wider.yaml) according to the path in your pc (default settings are relative to [datasets](datasets) folder).
 
@@ -44,7 +44,7 @@ parser.add_argument('-m', '--model',
                     help='YOLOv8 size model')
 ```
 
-and the test arguments
+the test arguments
 
 ```python
 parser.add_argument('-w', '--weights', type=str, help='Path to trained  weights', default='runs/detect/train/weights/best.pt')
@@ -58,8 +58,16 @@ parser.add_argument('-i', '--input', type=str, help='Sample input image path',
 parser.add_argument('-o', '--output', type=str, help='Output image path',
                     default='test_output.jpg')
 ```
+
+and finally the demo arguments
+
+```python
+parser.add_argument('-w', '--weights', type=str, help='Path to trained  weights', default='runs/detect/train/weights/best.pt')
+
+```
 ## Result example
-<img src="test_output.jpg" width="600"/>
+<img src="test_images/test_output.jpg" width="600"/>
+<img src="test_images/test_output_3.jpg" width="600"/>
 
 ## Downloads
 
