@@ -76,6 +76,7 @@ parser.add_argument('-w', '--weights', type=str, help='Path to trained  weights'
 
 ## Downloads
 
-You can download the pretrained weights (YOLOv8m) v0.1 for Face Detection [here](https://drive.google.com/file/d/1phe_qYqGUv6wko_pjw0lp1-AxVhPXsbX/view?usp=share_link).
+You can download the pretrained weights (YOLOv8 medium) v0.2 for Face Detection [here](https://drive.google.com/file/d/1IJZBcyMHGhzAi0G4aZLcqryqZSjPsps-/view?usp=sharing).
+You can download the pretrained weights (YOLOv8 nano) v0.1 for Face Detection [here](https://drive.google.com/file/d/1ZD_CEsbo3p3_dd8eAtRfRxHDV44M0djK/view?usp=sharing).
 
 You can also download the WiderFace dataset properly formatted to train your own model [here](https://drive.google.com/file/d/1roNilRaLMz4uLqZvINDAyxasG8ncwb5n/view?usp=share_link).
