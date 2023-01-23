@@ -6,6 +6,11 @@
 
 YOLOv8 for Face Detection. The project is a fork over [ultralytics](https://github.com/ultralytics/ultralytics) repo. They made a simple interface for training and run inference. Model detects faces on images and returns bounding boxes, score and class.
 
+
+**Model** | YOLOv8 nano | YOLOv8 medium 
+--- | --- | --- 
+**Avg. FPS (Colab T4 GPU)** | 82 | 31 
+
 ## Installation
 
 I recommend to use a new virtual environment and install the following packages:
