@@ -10,12 +10,13 @@ The next table presents the performance of the different model on some hardware 
 
 The results obtained from the implementation of the RetinaFace model deviate from the performance reported in the original repository. Despite utilizing the same methodology, including the execution of identical code for various models and the utilization of the same consistent evaluation procedures, a discrepancy in performance was observed.
 
-**Model** | YOLOv8 nano | YOLOv8 medium | RetinaFace-R50[^1] | RetinaFace-MNet0.25[^1]
---- | --- | --- | --- | --- 
-**Avg. FPS (Colab T4 GPU)** | 82 | 31 | 20 | 25 
-**WiderFace Easy Val. AP** | 0.8831 | 0.9761  | 0.9067 | 0.8382  
-**WiderFace Medium Val. AP** | 0.8280 | 0.9487 | 0.8602 | 0.7678
-**WiderFace Hard Val. AP** | 0.6055 | 0.7709 | 0.5520 | 0.4320 
+**Model** | YOLOv8 nano | YOLOv8 medium | RetinaFace-MNet0.25[^1] | RetinaFace-R50[^1] 
+--- | :---: | :---: | :---: | :---: 
+**Avg. FPS (Colab Tesla T4)** | 82 | 31 | 25 | 20
+**Avg. FPS (GTX 1650 with Max-Q Design)** | 55 | 28 | 19 | 16 
+**WiderFace Easy Val. AP** | 0.8831 | 0.9761  | 0.8382 | 0.9067
+**WiderFace Medium Val. AP** | 0.8280 | 0.9487 | 0.7678 | 0.8602 
+**WiderFace Hard Val. AP** | 0.6055 | 0.7709 | 0.4320 | 0.5520
 
 [^1]: RetinaFace based on [hphuongdhsp/retinaface](https://github.com/hphuongdhsp/retinaface) repo that is built on top of the [biubug6/Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface) implementation.  
 R50 = ResNet-50 and MNet0.25 = MobileNet-0.25
