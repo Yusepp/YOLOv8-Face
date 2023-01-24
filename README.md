@@ -53,7 +53,7 @@ You must download the [WIDERFACE official evaluation code and results](http://sh
 
 Then you must run `python evaluation.py -w <pretrained_model> -p <new prediction path> -e <path val images>` to create .txt evaluation files in the proper format.  
 
-Finally you run `cd WiderFace-Evaluation`, build Cython code with `python setup.py build_ext --inplace` and evaluate your .txt files with `python evaluation.py -p <your prediction dir> -g <groud truth dir>` to get Val. AP per each subset.
+Finally you run `cd Evaluation`, build Cython code with `python setup.py build_ext --inplace` and evaluate your .txt files with `python evaluation.py -p <your prediction dir> -g <groud truth dir>` to get Val. AP per each subset.
 
 WiderFace-Evaluation code is extracted from [wondervictor/WiderFace-Evaluation](https://github.com/wondervictor/WiderFace-Evaluation) repo. Notice that you need numpy == 1.20 to work properly since numpy.float is deprecated in later versions for numpy.float64
 
