@@ -42,9 +42,21 @@ pip install ultralytics
 
 ## Usage
 
-There are three python scripts, [train.py](train.py) is from fine tune a yolov8 model, [test.py](test.py) is to test the model with images and [demo.py](demo.py) is to launch a real-time demo of the model with your webcam.
+There are a few python scripts, [train.py](train.py) is to train a yolov8 model, [test.py](test.py) is to test the model with images and [demo.py](demo.py) is to launch a real-time demo of the model with your webcam.
 
 You must configure [wider.yaml](datasets/wider.yaml) according to the path in your pc (default settings are relative to [datasets](datasets) folder).
+
+# WIDERFACE EVALUATION
+You must download the [WIDERFACE official evaluation code and results](http://shuoyang1213.me/WIDERFACE/support/eval_script/eval_tools.zip) and extract the ground_truth folder that contains easy, medium and hard validation subsets.  
+
+Then you must run `python evaluation.py -w <pretrained_model> -p <new prediction path> -e <path val images>` to create .txt evaluation files in the proper format.  
+
+Finally you run `cd WiderFace-Evaluation`, build Cython code with `python setup.py build_ext --inplace` and evaluate your .txt files with `python evaluation.py -p <your prediction dir> -g <groud truth dir>` to get Val. AP per each subset.
+
+WiderFace-Evaluation code is extracted from [wondervictor/WiderFace-Evaluation](https://github.com/wondervictor/WiderFace-Evaluation) repo. Notice that you need numpy == 1.20 to work properly since numpy.float is deprecated in later versions for numpy.float64
+
+
+# Arguments
 
 The training arguments
 ```python
@@ -77,6 +89,20 @@ parser.add_argument('-i', '--input', type=str, help='Sample input image path',
 parser.add_argument('-o', '--output', type=str, help='Output image path',
                     default='test_output.jpg')
 ```
+evaluation arguments
+```python
+parser.add_argument('-e', '--eval', type=str, help='Path to WIDER_val/images',
+                    default=os.path.join('WIDER_val','images'))
+
+parser.add_argument('-w', '--weights', type=str, help='Path to trained weights',
+                        default='yolov8m_200e.pt')
+
+parser.add_argument('-p', '--pred', type=str, help='Path to create evaluation .txt s',
+                    default='WIDER_pred')
+
+parser.add_argument('-t', '--threshold', type=float, help='Score threshold',
+                    default=0.05)
+```
 
 and finally the demo arguments
 
@@ -84,7 +110,7 @@ and finally the demo arguments
 parser.add_argument('-w', '--weights', type=str, help='Path to trained  weights', default='runs/detect/train/weights/best.pt')
 
 ```
-## Result example
+## Results
 <img src="test_images/test_output.jpg" width="600"/>
 <img src="test_images/test_output_3.jpg" width="600"/>
 

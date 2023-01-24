@@ -28,32 +28,27 @@ def parse_variables():
     return variables
 
 def main():
+    # Parse the command line arguments
     variables = parse_variables()
+    # Select device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    # delete directory and content if exists
+    # Clean old run
     if os.path.exists('runs'):
         shutil.rmtree('runs')              
 
-    # load a pretrained model (recommended for best training results)
+    # Choose model size to train
     model = YOLO('{}.pt'.format(variables['model']))                
     model.to(device)
     
     
-    ###
-    torch.cuda.empty_cache()
-    gc.collect()
-    
-    # train the model
+    # Train the model
     _ = model.train(data='datasets/wider.yaml', epochs = variables['epochs'],
                     batch = variables['batch'], single_cls=True, pretrained=variables['pretrained'],
                     imgsz=variables['imgsize'], workers=variables['workers'])  
     
-    # evaluate model performance on the validation set
-    _ = model.val(data='datasets/wider.yaml')                       
-
-    # export the model to ONNX format
-    #success = model.export(format='onnx')       
+    # Evaluate whole validation dataset
+    _ = model.val(data='datasets/wider.yaml')                          
 
 if __name__ == '__main__':
     freeze_support()
