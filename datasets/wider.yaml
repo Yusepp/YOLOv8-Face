@@ -1,5 +1,7 @@
-path: WIDER_FACE_YOLO # Base path
-train: train # Train path relative to base path
+path: /home/yusepp/Desktop/DL/YOLOv8Face/datasets/WIDER_FACE_YOLO # Base path
+train: 
+  - train # Train path relative to base path
+  - valid
 val: valid # Validation path relative to base path
 test: test # Test path relative to base path
 

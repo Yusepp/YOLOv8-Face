@@ -11,7 +11,8 @@ The next table presents the performance of the different model on some hardware 
 The results obtained from the implementation of the RetinaFace model deviate from the performance reported in the original repository. Despite utilizing the same methodology, including the execution of identical code for various models and the utilization of the same consistent evaluation procedures, a discrepancy in performance was observed.
 
 **Model** | YOLOv8 nano | YOLOv8 medium | RetinaFace-MNet0.25[^1] | RetinaFace-R50[^1] 
---- | :---: | :---: | :---: | :---: 
+--- | :---: | :---: | :---: | :---:
+**Avg. FPS (RTX 4090)** | 169 | 117 | 44 | 39 
 **Avg. FPS (Colab Tesla T4)** | 82 | 31 | 25 | 20
 **Avg. FPS (GTX 1650 with Max-Q Design)** | 55 | 28 | 19 | 16 
 **WiderFace Easy Val. AP** | 0.8831 | 0.9761  | 0.8382 | 0.9067

@@ -131,3 +131,4 @@ dmypy.json
 runs
 *.pt
 
+datasets/WIDER_FACE_YOLO
