@@ -24,8 +24,8 @@ We added results from multi-scale testing using NMS and Weighted Boxes Fusion fr
 **+Multi-Scale+NMS** | 0.8324 | 0.9481  | --- | ---
 **+Multi-Scale+Weighted Boxes Fusion** | 0.8439 | 0.9499 | --- | ---
 | | | |
-**WiderFace Hard Val. AP** | 0.6049 | 0.7695 | | 0.4320 | 0.5520
-**+Multi-Scale+NMS** | 0.6356 | 0.7864  | --- | ---
+**WiderFace Hard Val. AP** | 0.6049 | 0.7695 | 0.4320 | 0.5520
+**+Multi-Scale+NMS** | 0.6356 | 0.7864 | --- | ---
 **+Multi-Scale+Weighted Boxes Fusion** | 0.6416 | 0.7923 | --- | ---
 
 [^1]: RetinaFace based on [hphuongdhsp/retinaface](https://github.com/hphuongdhsp/retinaface) repo that is built on top of the [biubug6/Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface) implementation.  
