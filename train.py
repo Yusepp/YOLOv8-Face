@@ -19,7 +19,7 @@ def parse_variables():
     parser.add_argument('-i', '--imgsize', type=int, help='Image size', default=640)
     parser.add_argument('-m', '--model',
                         type=str,
-                        choices=['yolov8n','yolov8s', 'yolov8m', 'yolov8l', 'yolov8xl'],
+                        choices=['yolov8n','yolov8s', 'yolov8m', 'yolov8l', 'yolov8x'],
                         default='yolov8m',
                         help='YOLOv8 size model')
     

@@ -8,16 +8,22 @@ YOLOv8 for Face Detection. The project is a fork over [ultralytics](https://gith
 
 The next table presents the performance of the different model on some hardware configurations and their evaluation over the different subsets (easy, medium, hard) of the WiderFace validation set.  
 
-The results obtained from the implementation of the RetinaFace model deviate from the performance reported in the original repository. Despite utilizing the same methodology, including the execution of identical code for various models and the utilization of the same consistent evaluation procedures, a discrepancy in performance was observed.
+We added results from multi-scale testing using NMS and Weighted Boxes Fusion from [ZFTurbo/Weighted-Boxes-Fusion repo](https://github.com/ZFTurbo/Weighted-Boxes-Fusion) to obtain the final bounding boxes. We used original scales and [500, 800, 1100, 1400, 1700] as those were the ones used in RetinaFace (we still lack of flip).
 
 **Model** | YOLOv8 nano | YOLOv8 medium | RetinaFace-MNet0.25[^1] | RetinaFace-R50[^1] 
 --- | :---: | :---: | :---: | :---:
 **Avg. FPS (RTX 4090)** | 169 | 117 | 44 | 39 
 **Avg. FPS (Colab Tesla T4)** | 82 | 31 | 25 | 20
 **Avg. FPS (GTX 1650 with Max-Q Design)** | 55 | 28 | 19 | 16 
-**WiderFace Easy Val. AP** | 0.8831 | 0.9761  | 0.8382 | 0.9067
-**WiderFace Medium Val. AP** | 0.8280 | 0.9487 | 0.7678 | 0.8602 
-**WiderFace Hard Val. AP** | 0.6055 | 0.7709 | 0.4320 | 0.5520
+**WiderFace Easy Val. AP** | 0.8833 | 0.9759  | 0.8382 | 0.9067
+**      +Multi-Scale+NMS** | 0.8835 | 0.9740 | --- | ---
+**      +Multi-Scale+Weighted Boxes Fusion** | 0.8902 | 0.9747  | --- | ---
+**WiderFace Medium Val. AP** | 0.8273 | 0.9483 | 0.7678 | 0.8602
+**      +Multi-Scale+NMS** | 0.8324 | 0.9481  | --- | ---
+**      +Multi-Scale+Weighted Boxes Fusion** | 0.8439 | 0.9499 | --- | ---
+**WiderFace Hard Val. AP** | 0.6049 | 0.7695 | 0.4320 | 0.5520
+**      +Multi-Scale+NMS** | 0.6356 | 0.7864  | --- | ---
+**      +Multi-Scale+Weighted Boxes Fusion** | 0.6416 | 0.7923  | --- | ---
 
 [^1]: RetinaFace based on [hphuongdhsp/retinaface](https://github.com/hphuongdhsp/retinaface) repo that is built on top of the [biubug6/Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface) implementation.  
 R50 = ResNet-50 and MNet0.25 = MobileNet-0.25
@@ -37,9 +43,10 @@ or alternatively if you are using conda
 conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia
 ```
 
-then you install the ultralytics package (this code works for *ultralytics-8.0.10*)
+then you install the ultralytics package (this code works for *ultralytics-8.0.21*) and the ensemble boxes package.
 ```bash
 pip install ultralytics
+pip install ensemble-boxes
 ```
 
 ## Usage
@@ -55,7 +62,7 @@ Then you must run `python evaluation.py -w <pretrained_model> -p <new prediction
 
 Finally you run `cd Evaluation`, build Cython code with `python setup.py build_ext --inplace` and evaluate your .txt files with `python evaluation.py -p <your prediction dir> -g <groud truth dir>` to get Val. AP per each subset.
 
-WiderFace-Evaluation code is extracted from [wondervictor/WiderFace-Evaluation](https://github.com/wondervictor/WiderFace-Evaluation) repo. Notice that you need numpy == 1.20 to work properly since numpy.float is deprecated in later versions for numpy.float64
+WiderFace-Evaluation code is extracted from [wondervictor/WiderFace-Evaluation](https://github.com/wondervictor/WiderFace-Evaluation) repo.  
 
 
 # Arguments
@@ -103,7 +110,12 @@ parser.add_argument('-p', '--pred', type=str, help='Path to create evaluation .t
                     default='WIDER_pred')
 
 parser.add_argument('-t', '--threshold', type=float, help='Score threshold',
-                    default=0.05)
+                    default=0.0001)
+
+parser.add_argument('--multi-scale', action='store_true', help='Multi scale testing', default=False)
+
+parser.add_argument('--vote', type=str, choices=['fusion','nms'], default='fusion', help='Bounding Box vote method')
+
 ```
 
 and finally the demo arguments

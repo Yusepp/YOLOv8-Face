@@ -7,7 +7,7 @@ from tqdm import tqdm
 from detection import get_model, detect_faces
 import numpy as np
 import argparse
-
+from ensemble_boxes import *
 
 
 parser = argparse.ArgumentParser(description='Run Inference YOLOv8 for Face Detection')
@@ -21,9 +21,11 @@ parser.add_argument('-p', '--pred', type=str, help='Path to create evaluation .t
                     default='WIDER_pred')
 
 parser.add_argument('-t', '--threshold', type=float, help='Score threshold',
-                    default=0.05)
+                    default=0.0001)
 
 parser.add_argument('--multi-scale', action='store_true', help='Multi scale testing', default=False)
+
+parser.add_argument('--vote', type=str, choices=['fusion','nms'], default='fusion', help='Bounding Box vote method')
 
 args = parser.parse_args()
 variables = vars(args)
@@ -35,13 +37,12 @@ eval_root = variables['eval']
 prediction_root = variables['pred']
 eval_list = os.listdir(eval_root)
 
-
+#TEST_SCALES = [200, 500, 800, 1100, 1400, 1700, 2000, 2300]
 TEST_SCALES = [500, 800, 1100, 1400, 1700]
 
 if not os.path.exists(prediction_root):
     os.mkdir(prediction_root)
 
-print(variables)
 if variables['multi_scale']:
     print('Testing on multi-scale:', TEST_SCALES)
 else:
@@ -55,32 +56,36 @@ for directory in tqdm(eval_list):
     current_eval_dir = os.path.join(eval_root, directory)
     images = os.listdir(current_eval_dir)
     
-    for image in tqdm(images):
+    for image in images:
         image_array = Image.open(os.path.join(current_eval_dir, image))
-        original_w, original_h = np.array(image_array).shape[:2]
+        original_h, original_w = np.array(image_array).shape[:2]
         if not variables['multi_scale']:
             _, boxes, scores, cls = detect_faces(model, box_format='xywh',imgs=[image_array], th=variables['threshold'])
             boxes, scores, cls = boxes[0], scores[0], cls[0]
         else:
             all_boxes, all_scores, all_cls = [], [], []
-  
+            _, boxes, scores, cls = detect_faces(model, box_format='xyxyn',imgs=[image_array], th=variables['threshold'])
+            if len(boxes) > 0:
+                all_boxes, all_scores, all_cls = [boxes[0]], [scores[0]], [cls[0]]
             for scale in TEST_SCALES:
-                new_size = (int(scale), int(original_h*(original_w/scale)))
-                _, boxes, scores, cls = detect_faces(model, box_format='xywhn',imgs=[image_array.resize(new_size)], th=variables['threshold'])
+                new_size = (int(original_h*(original_w/scale)), int(scale))
+                _, boxes, scores, cls = detect_faces(model, box_format='xyxyn',imgs=[image_array.resize(new_size)], th=variables['threshold'])
                 boxes, scores, cls = boxes[0], scores[0], cls[0]
-                all_boxes.append(boxes) 
-                all_scores.append(scores)
-                all_cls.append(cls)
+                if len(boxes) > 0:
+                    all_boxes.append(boxes) 
+                    all_scores.append(scores)
+                    all_cls.append(cls)
             
-            max_detections = max([len(r) for r in all_boxes])
-            boxes, scores, cls = [], [], []
-            for i in range(max_detections):
-                final_box = np.mean([r[i] for r in all_boxes if i <= len(r) - 1], axis=0)
-                final_score = np.mean([r[i] for r in all_scores if i <= len(r) - 1], axis=0)
-                final_cls = np.mean([r[i] for r in all_cls if i <= len(r) - 1], axis=0)
-                boxes.append([final_box[0]*original_w, final_box[1]*original_h, final_box[2]*original_w, final_box[3]*original_h])
-                scores.append(final_score)
-                cls.append(0 if int(final_cls) == 0 else 1)
+            try:
+                if variables['vote'] == 'nms':
+                    boxes, scores, cls = nms(all_boxes, all_scores, all_cls, weights=None, iou_thr=0.5)
+                elif variables['vote'] == 'fusion':
+                    boxes, scores, cls = weighted_boxes_fusion(all_boxes, all_scores, all_cls, weights=None, iou_thr=0.5, skip_box_thr=0.0001)
+                    
+                boxes = [[x1*original_w, y1*original_h, abs(x1-x2)*original_w, abs(y1-y2)*original_h] for x1,y1,x2,y2 in boxes]
+            except:
+                boxes, scores, cls = [], [], []
+            
             
         
         submission_file = os.path.join(current_pred_dir, image).replace(".jpg", ".txt")

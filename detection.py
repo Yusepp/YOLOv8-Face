@@ -16,7 +16,7 @@ def detect_faces(model, imgs, box_format='xyxy',th=0.5):
     total_scores = []
     total_cls = []
     
-    results = model.predict(imgs, stream=False)
+    results = model.predict(imgs, stream=False, verbose=False)
     
     for i, image_result in enumerate(results):
         filtered_crops = []
@@ -30,11 +30,13 @@ def detect_faces(model, imgs, box_format='xyxy',th=0.5):
         if box_format == 'xyxy':
             image_boxes = image_result.boxes.xyxy.cpu().numpy()
         elif box_format == 'xywh':
-            image_boxes = image_result.boxes.xywh.cpu().numpy()
+            image_boxes = image_result.boxes.xyxy.cpu().numpy()
+            image_boxes = [[round(x1), round(y1), round(np.abs(x1-x2)), round(np.abs(y1-y2))] for x1,y1,x2,y2 in image_boxes]
         elif box_format == 'xyxyn':
             image_boxes = image_result.boxes.xyxyn.cpu().numpy()
         elif box_format == 'xywhn':
-            image_boxes = image_result.boxes.xywhn.cpu().numpy()
+            image_boxes = image_result.boxes.xyxyn.cpu().numpy()
+            image_boxes = [[float(x1), float(y1), float(np.abs(x1-x2)), float(np.abs(y1-y2))] for x1,y1,x2,y2 in image_boxes]
               
         image_scores = image_result.boxes.conf.cpu().numpy()
         image_cls = image_result.boxes.cls.cpu().numpy()
