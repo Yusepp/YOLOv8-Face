@@ -27,6 +27,7 @@ def main():
     variables = parse_variables()
     # Select device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'mps' if torch.backends.mps.is_available() else device
     
     # Threshold detection
     threshold = variables['threshold']

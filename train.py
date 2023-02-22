@@ -32,7 +32,8 @@ def main():
     variables = parse_variables()
     # Select device
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
+    device = 'mps' if torch.backends.mps.is_available() else device
+    
     # Clean old run
     if os.path.exists('runs'):
         shutil.rmtree('runs')              
@@ -40,7 +41,7 @@ def main():
     # Choose model size to train
     model = YOLO('{}.pt'.format(variables['model']))                
     model.to(device)
-    
+    print(device)
     
     # Train the model
     _ = model.train(data='datasets/wider.yaml', epochs = variables['epochs'],

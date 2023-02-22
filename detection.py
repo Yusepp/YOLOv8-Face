@@ -5,6 +5,8 @@ import cv2
 
 def get_model(weights):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'mps' if torch.backends.mps.is_available() else device
+    
     model = YOLO(weights)                
     model.to(device)
     return model

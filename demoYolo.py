@@ -11,15 +11,17 @@ from PIL import Image
 
 def get_model(weights):
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'mps' if torch.backends.mps.is_available() else device
+    
+    if device == 'cuda': cudnn.benchmark = True
+    
     model = YOLO(weights)                
     model.to(device)
     return model
 
-cudnn.benchmark = True
-
     
 # Initialize YOLO on GPU device.
-detector = get_model('/home/yusepp/Desktop/DL/yolov8m.pt')
+detector = get_model('yolov8n.pt')
 total = []
 first_time =  time()
 cap = cv2.VideoCapture(0)
@@ -51,11 +53,3 @@ while cap.isOpened():
         break
     
 cap.release()
-
-# Nano = 55.4 fps ! 169 fps
-# Medium = 27.5 fps ! 117 fps
-#==================== Results ====================
-# Easy   Val AP: 0.9759045555094775
-# Medium Val AP: 0.9483292864330108
-# Hard   Val AP: 0.7694889580283849
-#=================================================
