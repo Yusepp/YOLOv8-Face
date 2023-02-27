@@ -21,8 +21,8 @@ We added results from multi-scale testing using NMS and Weighted Boxes Fusion fr
 **+Multi-Scale+Weighted Boxes Fusion** | 0.8902 | 0.9747 | 0.9713 | --- | ---
 | | | | |
 **WiderFace Medium Val. AP** | 0.8273 | 0.9483 | 0.9518 | 0.7678 | 0.8602
-**+Multi-Scale+NMS** | 0.8324 | 0.9481 | 0.9492 | 0.9511 | ---
-**+Multi-Scale+Weighted Boxes Fusion** | 0.8439 | 0.9499 | --- | --- | ---
+**+Multi-Scale+NMS** | 0.8324 | 0.9481 | 0.9492 | --- | ---
+**+Multi-Scale+Weighted Boxes Fusion** | 0.8439 | 0.9499 | 0.9511 | --- | ---
 | | | | |
 **WiderFace Hard Val. AP** | 0.6049 | 0.7695 | 0.7936 | 0.4320 | 0.5520
 **+Multi-Scale+NMS** | 0.6356 | 0.7864 | 0.8072 | --- | ---
