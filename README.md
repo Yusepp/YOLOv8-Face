@@ -133,6 +133,8 @@ parser.add_argument('-w', '--weights', type=str, help='Path to trained  weights'
 
 ## Downloads
 
+You can download the pretrained weights (YOLOv8 large) v0.1 for Face Detection [here](https://drive.google.com/file/d/1iHL-XjvzpbrE8ycVqEbGla4yc1dWlSWU/view?usp=sharing).
+
 You can download the pretrained weights (YOLOv8 medium) v0.2 for Face Detection [here](https://drive.google.com/file/d/1IJZBcyMHGhzAi0G4aZLcqryqZSjPsps-/view?usp=sharing).
 
 You can download the pretrained weights (YOLOv8 nano) v0.1 for Face Detection [here](https://drive.google.com/file/d/1ZD_CEsbo3p3_dd8eAtRfRxHDV44M0djK/view?usp=sharing). 
