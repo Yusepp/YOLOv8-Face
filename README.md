@@ -10,23 +10,23 @@ The next table presents the performance of the different model on some hardware 
 
 We added results from multi-scale testing using NMS and Weighted Boxes Fusion from [ZFTurbo/Weighted-Boxes-Fusion repo](https://github.com/ZFTurbo/Weighted-Boxes-Fusion) to obtain the final bounding boxes. We used original scales and [500, 800, 1100, 1400, 1700] as those were the ones used in RetinaFace (we still lack of flip).
 
-**Model** | YOLOv8 nano | YOLOv8 medium | RetinaFace-MNet0.25[^1] | RetinaFace-R50[^1] 
---- | :---: | :---: | :---: | :---:
-**Avg. FPS (RTX 4090)** | 169 | 117 | 44 | 39 
-**Avg. FPS (Colab Tesla T4)** | 82 | 31 | 25 | 20
-**Avg. FPS (GTX 1650 with Max-Q Design)** | 55 | 28 | 19 | 16
-| | | |
-**WiderFace Easy Val. AP** | 0.8833 | 0.9759  | 0.8382 | 0.9067
-**+Multi-Scale+NMS** | 0.8835 | 0.9740 | --- | ---
-**+Multi-Scale+Weighted Boxes Fusion** | 0.8902 | 0.9747 | --- | ---
-| | | |
-**WiderFace Medium Val. AP** | 0.8273 | 0.9483 | 0.7678 | 0.8602
-**+Multi-Scale+NMS** | 0.8324 | 0.9481  | --- | ---
-**+Multi-Scale+Weighted Boxes Fusion** | 0.8439 | 0.9499 | --- | ---
-| | | |
-**WiderFace Hard Val. AP** | 0.6049 | 0.7695 | 0.4320 | 0.5520
-**+Multi-Scale+NMS** | 0.6356 | 0.7864 | --- | ---
-**+Multi-Scale+Weighted Boxes Fusion** | 0.6416 | 0.7923 | --- | ---
+**Model** | YOLOv8 nano | YOLOv8 medium | YOLOv8 large | RetinaFace-MNet0.25[^1] | RetinaFace-R50[^1] 
+--- | :---: | :---: | :---: | :---: | :---:
+**Avg. FPS (RTX 4090)** | 169 | 117 | --- | 44 | 39 
+**Avg. FPS (Colab Tesla T4)** | 82 | 31 | --- | 25 | 20
+**Avg. FPS (GTX 1650 with Max-Q Design)** | 55 | 28 | --- | 19 | 16
+| | | | |
+**WiderFace Easy Val. AP** | 0.8833 | 0.9759 | 0.9741 | 0.8382 | 0.9067
+**+Multi-Scale+NMS** | 0.8835 | 0.9740 | 0.9699 | --- | ---
+**+Multi-Scale+Weighted Boxes Fusion** | 0.8902 | 0.9747 | 0.9713 | --- | ---
+| | | | |
+**WiderFace Medium Val. AP** | 0.8273 | 0.9483 | 0.9518 | 0.7678 | 0.8602
+**+Multi-Scale+NMS** | 0.8324 | 0.9481 | 0.9492 | 0.9511 | ---
+**+Multi-Scale+Weighted Boxes Fusion** | 0.8439 | 0.9499 | --- | --- | ---
+| | | | |
+**WiderFace Hard Val. AP** | 0.6049 | 0.7695 | 0.7936 | 0.4320 | 0.5520
+**+Multi-Scale+NMS** | 0.6356 | 0.7864 | 0.8072 | --- | ---
+**+Multi-Scale+Weighted Boxes Fusion** | 0.6416 | 0.7923 | 0.8156 | --- | ---
 
 [^1]: RetinaFace based on [hphuongdhsp/retinaface](https://github.com/hphuongdhsp/retinaface) repo that is built on top of the [biubug6/Pytorch_Retinaface](https://github.com/biubug6/Pytorch_Retinaface) implementation.  
 R50 = ResNet-50 and MNet0.25 = MobileNet-0.25

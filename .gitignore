@@ -136,3 +136,6 @@ Evaluation/ground_truth
 
 .DS_Store
 datasets/.DS_Store
+
+custom
+custom/**
