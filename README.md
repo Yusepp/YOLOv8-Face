@@ -1,7 +1,12 @@
 # YOLOv8-Face
 
-## Small Update 10/19/23
+
+
+## Update 02/23/24
+Things don't always pan out the way we hope, so I couldn't add anything noteworthy to the repo lately. PhD projects are taking up all my time right now, but no stress, I'm working on something big and exciting! Keep an eye out 👀
+## Update 10/19/23
 I took small break due to other projects related to my PhD however I plan to update models before 2024. I want to try providing also 68 2D facial keypoints to obtain.
+
 
 <a target="_blank" href="https://colab.research.google.com/drive/14QfCaIClnfSmHjjVkMNoMtZ0MlRhCwr6?usp=sharing">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
